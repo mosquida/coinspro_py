@@ -149,4 +149,15 @@ class CoinsAccount:
         params["signature"] =self._create_signature(params)
         return self._send_request("DELETE", endpoint="/openapi/v1/order", params=params)
  
- 
+    def cancel_all_open_order(self, symbol, recv_window=5000):
+        # Required params
+        params = {
+            'symbol': symbol,
+            'recvWindow': recv_window,
+            'timestamp': int(time.time() * 1000),
+        }
+        
+        params["signature"] =self._create_signature(params)
+        return self._send_request("DELETE", endpoint="/openapi/v1/openOrders", params=params)
+    
+    
