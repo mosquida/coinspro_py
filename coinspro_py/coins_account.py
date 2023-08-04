@@ -149,7 +149,7 @@ class CoinsAccount:
         params["signature"] =self._create_signature(params)
         return self._send_request("DELETE", endpoint="/openapi/v1/order", params=params)
  
-    def cancel_all_open_order(self, symbol, recv_window=5000):
+    def cancel_all_open_orders(self, symbol, recv_window=5000):
         # Required params
         params = {
             'symbol': symbol,
@@ -160,4 +160,90 @@ class CoinsAccount:
         params["signature"] =self._create_signature(params)
         return self._send_request("DELETE", endpoint="/openapi/v1/openOrders", params=params)
     
+    def query_all_open_orders(self, symbol="", recv_window=5000):
+     # Required params
+        params = {
+            'symbol': symbol,
+            'recvWindow': recv_window,
+            'timestamp': int(time.time() * 1000),
+        }
+        
+        params["signature"] =self._create_signature(params)
+        return self._send_request("GET", endpoint="/openapi/v1/openOrders", params=params)
     
+    
+    def get_history_orders(self, symbol="", orderId=None, startTime=None, endTime=None, limit=None, recv_window=5000):
+     # Required params
+        params = {
+            'symbol': symbol,
+            'recvWindow': recv_window,
+            'timestamp': int(time.time() * 1000),
+        }
+        
+        if orderId:
+            params["orderId"] = orderId
+        if startTime:
+            params["startTime"] = startTime
+        if endTime:
+            params["endTime"] = endTime  
+        if limit:
+            params["limit"] = limit    
+            
+        params["signature"] =self._create_signature(params)
+        return self._send_request("GET", endpoint="/openapi/v1/historyOrders", params=params)
+    
+    def get_account_trade_list(self, symbol, orderId=None, fromId=None, startTime=None, endTime=None, limit=None, recv_window=5000):
+        # Required params
+        params = {
+            'symbol': symbol,
+            'recvWindow': recv_window,
+            'timestamp': int(time.time() * 1000),
+        }
+        
+        if orderId:
+            params["orderId"] = orderId
+        if startTime:
+            params["startTime"] = startTime
+        if endTime:
+            params["endTime"] = endTime  
+        if fromId:
+            params["fromId"] = fromId  
+        if limit:
+            params["limit"] = limit    
+            
+        params["signature"] =self._create_signature(params)
+        return self._send_request("GET", endpoint="/openapi/v1/myTrades", params=params)
+    
+    def withdraw_to_coinsph_account(self, coin, amount, withdrawOrderId=None, recv_window=5000):
+        # Required params
+        params = {
+            'coin': coin,
+            'amount': amount,
+            'recvWindow': recv_window,
+            'timestamp': int(time.time() * 1000),
+        }
+        
+        if withdrawOrderId:
+            params["withdrawOrderId"] = withdrawOrderId
+        
+        params["signature"] =self._create_signature(params)
+        return self._send_request("POST", endpoint="/openapi/v1/capital/withdraw/apply", params=params)
+    
+    def deposit_to_exchange_account(self, coin, amount, depositOrderId=None, recv_window=5000):
+        # Required params
+        params = {
+            'coin': coin,
+            'amount': amount,
+            'recvWindow': recv_window,
+            'timestamp': int(time.time() * 1000),
+        }
+        
+        if depositOrderId:
+            params["depositOrderId"] = depositOrderId
+        
+        params["signature"] =self._create_signature(params)
+        return self._send_request("POST", endpoint="/openapi/v1/capital/deposit/apply", params=params)
+    
+    # DEPOSIT ORDER WHICH DEPOSIT COINS_PH TO EXCHANGE history 
+    def get_deposit_order_history():
+        pass
