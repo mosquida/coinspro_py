@@ -27,9 +27,11 @@ class CoinsAccount:
         }
         
         if method == "GET":
-            response = requests.get(url, headers=headers, params=params, )
+            response = requests.get(url, headers=headers, params=params)
         elif method == "POST":
-            response = requests.post(url, data=params, headers=headers)
+            response = requests.post(url, headers=headers, data=params)
+        elif method == "DELETE":
+            response = requests.delete(url, headers=headers, data=params)
             
         if response.status_code == 200:
             return response.json()
@@ -115,6 +117,7 @@ class CoinsAccount:
         params["signature"] =self._create_signature(params)
         return self._send_request("POST", endpoint="/openapi/v1/order/test", params=params)
 
+    # Parameter orderId or origClientOrderId is required.
     def query_order(self, orderId=None, origClientOrderId=None, recv_window=5000):
         # Required params
         params = {
@@ -129,3 +132,21 @@ class CoinsAccount:
         
         params["signature"] =self._create_signature(params)
         return self._send_request("GET", endpoint="/openapi/v1/order", params=params)
+
+    # Parameter orderId or origClientOrderId is required.
+    def cancel_order(self, orderId=None, origClientOrderId=None, recv_window=5000):
+        # Required params
+        params = {
+            'recvWindow': recv_window,
+            'timestamp': int(time.time() * 1000),
+        }
+        
+        if orderId:
+            params["orderId"] = orderId
+        if origClientOrderId:
+            params["origClientOrderId"] = origClientOrderId
+        
+        params["signature"] =self._create_signature(params)
+        return self._send_request("DELETE", endpoint="/openapi/v1/order", params=params)
+ 
+ 
