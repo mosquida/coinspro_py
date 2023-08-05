@@ -245,5 +245,54 @@ class CoinsAccount:
         return self._send_request("POST", endpoint="/openapi/v1/capital/deposit/apply", params=params)
     
     # DEPOSIT ORDER WHICH DEPOSIT COINS_PH TO EXCHANGE history 
-    def get_deposit_order_history():
-        pass
+    def get_deposit_order_history(self, coin=None, depositOrderId=None, status=None, offset=None, limit=None, startTime=None, endTime=None, recv_window=5000):
+        # Required params
+        params = {
+            'recvWindow': recv_window,
+            'timestamp': int(time.time() * 1000),
+        }
+        
+        if coin:
+            params["coin"] = coin
+        if depositOrderId:
+            params["depositOrderId"] = depositOrderId
+        if status:
+            params["status"] = status
+        if offset:
+            params["offset"] = offset
+        if limit:
+            params["limit"] = limit    
+        if startTime:
+            params["startTime"] = startTime
+        if endTime:
+            params["endTime"] = endTime
+            
+        params["signature"] =self._create_signature(params)
+        return self._send_request("GET", endpoint="/openapi/v1/capital/deposit/history", params=params)
+
+    # WITHDRAWAL ORDER WHICH WITHDRAW FROM EXCHANGE TO COINS_PH history
+    def get_withdraw_order_history(self, coin=None, depositOrderId=None, status=None, offset=None, limit=None, startTime=None, endTime=None, recv_window=5000):
+        # Required params
+        params = {
+            'recvWindow': recv_window,
+            'timestamp': int(time.time() * 1000),
+        }
+        
+        if coin:
+            params["coin"] = coin
+        if depositOrderId:
+            params["depositOrderId"] = depositOrderId
+        if status:
+            params["status"] = status
+        if offset:
+            params["offset"] = offset
+        if limit:
+            params["limit"] = limit    
+        if startTime:
+            params["startTime"] = startTime
+        if endTime:
+            params["endTime"] = endTime
+            
+        params["signature"] =self._create_signature(params)
+        return self._send_request("GET", endpoint="/openapi/v1/capital/withdraw/history", params=params)
+
