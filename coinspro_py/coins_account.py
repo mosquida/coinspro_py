@@ -296,3 +296,73 @@ class CoinsAccount:
         params["signature"] =self._create_signature(params)
         return self._send_request("GET", endpoint="/openapi/v1/capital/withdraw/history", params=params)
 
+    def get_trade_fee(self, symbol=None, recv_window=5000):
+         # Required params
+        params = {
+            'recvWindow': recv_window,
+            'timestamp': int(time.time() * 1000),
+        }
+        
+        if symbol:
+            params["symbol"] = symbol
+                   
+        params["signature"] =self._create_signature(params)
+        return self._send_request("GET", endpoint="/openapi/v1/asset/tradeFee", params=params)
+        
+    
+    def payment_request(self, payer_contact_info, receiving_account, amount, message, supported_payment_collectors=None, expires_at=None):
+         # Required params
+        params = {
+            'payer_contact_info': payer_contact_info,
+            'receiving_account': receiving_account,
+            'amount':amount,
+            'message': message,
+            'timestamp': int(time.time() * 1000),
+        }
+        
+        if supported_payment_collectors:
+            params["supported_payment_collectors"] = supported_payment_collectors
+        if expires_at:
+            params["expires_at"] = expires_at
+                   
+        params["signature"] =self._create_signature(params)
+        return self._send_request("POST", endpoint="/openapi/v3/payment-request/payment-requests", params=params)
+    
+    def get_payment_request(self, id, start_time=None, end_time=None, limit=None):
+          # Required params
+        params = {
+            'id': id,
+            'timestamp': int(time.time() * 1000),
+        }
+        
+        if start_time:
+            params["start_time"] = start_time
+        if end_time:
+            params["end_time"] = end_time
+        if limit:
+            params["limit"] = limit
+                   
+        params["signature"] =self._create_signature(params)
+        return self._send_request("GET", endpoint="/openapi/v3/payment-request/get-payment-request", params=params)
+    
+
+    def cancel_payment_request(self, id):
+         # Required params
+        params = {
+            'id': id,
+            'timestamp': int(time.time() * 1000),
+        }
+        
+        params["signature"] =self._create_signature(params)
+        return self._send_request("POST", endpoint="/openapi/v3/payment-request/delete-payment-request", params=params)
+    
+    def send_payment_request_reminder(self, id):
+        params = {
+            'id': id,
+            'timestamp': int(time.time() * 1000),
+        }
+        
+        params["signature"] =self._create_signature(params)
+        return self._send_request("POST", endpoint="/openapi/v3/payment-request/payment-request-reminder", params=params)
+    
+    
