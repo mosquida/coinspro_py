@@ -1,4 +1,6 @@
-from coinspro_py.coins_account import Account
+from coinspro_py.account import Account
+from coinspro_py.market_data import MarketData
+
 from coinspro_py.utils import _send_request, _create_signature
 
 class CoinsPro:
@@ -13,6 +15,7 @@ class CoinsPro:
         
     def init(self):
         self.account = Account(secret_key=self.secret_key, api_key=self.api_key, base_url=self.base_url)
+        self.market_data = MarketData(secret_key=self.secret_key, api_key=self.api_key, base_url=self.base_url)
         
         
     # GENERAL ENDPOINTS
