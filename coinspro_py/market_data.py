@@ -48,17 +48,49 @@ class MarketData:
         
         return _send_request("GET", endpoint="/openapi/quote/v1/klines", params=params, api_key=self.api_key, base_url=self.base_url)
     
-    def get_current_average_price():
-        pass
+    def get_current_average_price(self, symbol):
+        params = {
+            'symbol': symbol,
+        }
+        
+        return _send_request("GET", endpoint="/openapi/quote/v1/avgPrice", params=params, api_key=self.api_key, base_url=self.base_url)
     
-    def get_24hour_ticker_change_stat():
-        pass
+    def get_24hour_ticker_change_stat(self, symbol=None, symbols=None):
+         # Required params
+        params = {}
+        
+        if symbol:
+            params["symbol"] = symbol
+        if symbols:
+            params["symbols"] = symbols
+               
+        return _send_request("GET", endpoint="/openapi/quote/v1/ticker/24hr", params=params, api_key=self.api_key, base_url=self.base_url)
     
-    def get_symbol_price_ticker():
-        pass
     
-    def get_symbol_orderbook_ticker():
-        pass
+    def get_symbol_price_ticker(self, symbol=None, symbols=None):
+        # Required params
+        params = {}
+        
+        if symbol:
+            params["symbol"] = symbol
+        if symbols:
+            params["symbols"] = symbols
+               
+        return _send_request("GET", endpoint="/openapi/quote/v1/ticker/price", params=params, api_key=self.api_key, base_url=self.base_url)
     
-    def get_crypto_assets_trading_pairs():
-        pass
+    
+    def get_symbol_orderbook_ticker(self, symbol=None, symbols=None):
+        # Required params
+        params = {}
+        
+        if symbol:
+            params["symbol"] = symbol
+        if symbols:
+            params["symbols"] = symbols
+               
+        return _send_request("GET", endpoint="/openapi/quote/v1/ticker/bookTicker", params=params, api_key=self.api_key, base_url=self.base_url)
+        
+    
+    def get_crypto_assets_trading_pairs(self):
+       return _send_request("GET", endpoint="/openapi/v1/pairs", api_key=self.api_key, base_url=self.base_url)
+
