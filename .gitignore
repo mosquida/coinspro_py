@@ -1,3 +1,5 @@
 test_account.py
 test_general.py
 test_market_data.py
+test_wallet.py
+test_merchant.py
