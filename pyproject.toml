@@ -9,6 +9,8 @@ packages = [{include = "coinspro_py"}]
 [tool.poetry.dependencies]
 python = "^3.8"
 requests = "^2.31.0"
+websockets = "^11.0.3"
+
 
 
 [build-system]
