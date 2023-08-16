@@ -5,9 +5,8 @@ import json
 class WebSocket:
     def __init__(self):
         self.uri_socket = "wss://wsapi.pro.coins.ph/openapi/quote/ws/v3/"
-        self.callbacks = []
 
-    async def subscribe(self, stream):
+    async def subscribe(self, stream, callback):
         async with websockets.connect(self.uri_socket) as ws:
             subscribe_request = {
                 "method": "SUBSCRIBE",
@@ -20,14 +19,10 @@ class WebSocket:
                 response = await ws.recv()
 
                 data = json.loads(response)
-                for callback in self.callbacks:
-                    callback(data)
+                callback(data)
 
-    def add_callback(self, callback):
-        self.callbacks.append(callback)
-
-    async def handle_multi_streams(self, streams, callback):
-        self.add_callback(callback)
+   
+    async def subscribe_streams(self, streams, callback):
         
-        tasks = [self.subscribe(stream) for stream in streams]
+        tasks = [self.subscribe(stream, callback) for stream in streams]
         await asyncio.gather(*tasks)
