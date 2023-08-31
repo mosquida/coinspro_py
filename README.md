@@ -1,14 +1,14 @@
 # coinspro-py
 
-## Python library wrapper for Coins Pro REST API (https://coins-docs.github.io/rest-api/) 
+## Simple python library wrapper for Coins Pro REST API (https://coins-docs.github.io/rest-api/) 
 
 Merchant Endpoint and Websockets Streams still in development !!!
-
+Library not uploaded to pypi yet.
 
 Must setup the API first on your coinspro account
 https://support.coins.ph/hc/en-us/articles/11620395767193-How-to-set-up-API-via-Coins-Pro
 
-Set 1 public address of your computer
+Set one public address of your computer,
 Keep the secret key and api key
 
 
