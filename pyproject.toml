@@ -10,6 +10,8 @@ packages = [{include = "coinspro_py"}]
 python = "^3.8"
 requests = "^2.31.0"
 websockets = "^11.0.3"
+websocket-client = "^1.6.2"
+python-dotenv = "^1.0.0"
 
 
 

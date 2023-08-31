@@ -1,16 +1,19 @@
+import os
 from coinspro_py import CoinsPro
+from dotenv import load_dotenv
 
+load_dotenv()
 coinspro = CoinsPro()
 
-coinspro.set_secret_key("4wG4ERoeNOarBAgc4z68Au1nUlfghWbM2s4wUhKKSYTlIXyK2GvWPUxvOglwv24e")
-coinspro.set_api_key("tkI87B4vIR9dhkDCm9zQi5qzpla9UmT9YmQTwH5XUcldYorCvagt6dRckP9FJpmq")
+coinspro.set_secret_key(os.getenv("SECRET_KEY"))
+coinspro.set_api_key(os.getenv("API_KEY"))
 
 coinspro.init()
 
 ##################### WALLET ENDPOINTS #####################
 # ALL COINS’ INFORMATION (USER_DATA)
-# query = coinspro.wallet.get_all_coins_info()
-# print(query)
+query = coinspro.wallet.get_all_coins_info()
+print(query)
 
 # DEPOSIT ADDRESS (USER_DATA)
 # Network can be found on coinspro.wallet.get_all_coins_info()
